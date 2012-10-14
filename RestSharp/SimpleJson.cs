@@ -58,6 +58,10 @@ using System.Runtime.Serialization;
 using System.Text;
 using RestSharp.Reflection;
 
+#if WindowsCE
+using RestSharp.Helpers;
+#endif
+
 namespace RestSharp
 {
     #region JsonArray
@@ -823,8 +827,13 @@ namespace RestSharp
                             uint codePoint;
                             if (
                                 !(success =
+#if WindowsCE
+                                  UInt32Helpers.TryParse(new string(json, index, 4), NumberStyles.HexNumber,
+                                                  CultureInfo.InvariantCulture, out codePoint)))
+#else
                                   UInt32.TryParse(new string(json, index, 4), NumberStyles.HexNumber,
                                                   CultureInfo.InvariantCulture, out codePoint)))
+#endif
                                 return "";
 
                             // convert the integer codepoint to a unicode char and add to string
@@ -837,8 +846,13 @@ namespace RestSharp
                                 {
                                     uint lowCodePoint;
                                     if (new string(json, index, 2) == "\\u" &&
+#if WindowsCE
+                                        UInt32Helpers.TryParse(new string(json, index + 2, 4), NumberStyles.HexNumber,
+                                                        CultureInfo.InvariantCulture, out lowCodePoint))
+#else
                                         UInt32.TryParse(new string(json, index + 2, 4), NumberStyles.HexNumber,
                                                         CultureInfo.InvariantCulture, out lowCodePoint))
+#endif
                                     {
                                         if (0xDC00 <= lowCodePoint && lowCodePoint <= 0xDFFF)    // if low surrogate
                                         {
@@ -852,7 +866,7 @@ namespace RestSharp
                                 success = false;    // invalid surrogate pair
                                 return "";
                             }
-#if SILVERLIGHT || WINDOWS_PHONE
+#if SILVERLIGHT || WINDOWS_PHONE || WindowsCE
                             s.Append(ConvertFromUtf32((int)codePoint));
 #else
                             s.Append(Char.ConvertFromUtf32((int)codePoint));
@@ -877,7 +891,7 @@ namespace RestSharp
             return s.ToString();
         }
 
-#if SILVERLIGHT || WINDOWS_PHONE
+#if SILVERLIGHT || WINDOWS_PHONE || WindowsCE
 		private static string ConvertFromUtf32(int utf32)
         {
             // http://www.java2s.com/Open-Source/CSharp/2.6.4-mono-.net-core/System/System/Char.cs.htm
@@ -904,13 +918,21 @@ namespace RestSharp
             if (str.IndexOf(".", StringComparison.OrdinalIgnoreCase) != -1 || str.IndexOf("e", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 double number;
+#if WindowsCE
+                success = DoubleHelpers.TryParse(new string(json, index, charLength), NumberStyles.Any, CultureInfo.InvariantCulture, out number);
+#else
                 success = double.TryParse(new string(json, index, charLength), NumberStyles.Any, CultureInfo.InvariantCulture, out number);
+#endif
                 returnNumber = number;
             }
             else
             {
                 long number;
+#if WindowsCE
+                success = LongHelpers.TryParse(new string(json, index, charLength), NumberStyles.Any, CultureInfo.InvariantCulture, out number);
+#else
                 success = long.TryParse(new string(json, index, charLength), NumberStyles.Any, CultureInfo.InvariantCulture, out number);
+#endif
                 returnNumber = number;
             }
 
@@ -1403,10 +1425,19 @@ namespace RestSharp
 
                     if (type.IsArray)
                     {
-                        list = (IList) Activator.CreateInstance(type, jsonObject.Count);
+#if WindowsCE
+                        list = (IList)Activator.CreateInstance(type);
+#else
+                        list = (IList)Activator.CreateInstance(type, jsonObject.Count);
+#endif
+#if WindowsCE
+                        foreach (object o in jsonObject)
+                            list.Add(DeserializeObject(o, type.GetElementType()));
+#else
                         int i = 0;
                         foreach (object o in jsonObject)
                             list[i++] = DeserializeObject(o, type.GetElementType());
+#endif
                     }
                     else if (ReflectionUtils.IsTypeGenericeCollectionInterface(type) ||
 #if NETFX_CORE
@@ -1721,6 +1752,8 @@ namespace RestSharp
                         break;
                     }
                 }
+#elif WindowsCE
+                ConstructorInfo constructorInfo = type.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, TypeHelpers.EmptyTypes, null);
 #else
                 ConstructorInfo constructorInfo = type.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null);
 #endif
@@ -1819,6 +1852,8 @@ namespace RestSharp
 #else
 #if NETFX_CORE
                 return delegate(object instance) { return getMethodInfo.Invoke(instance, new Type[] { }); };
+#elif WindowsCE
+                return delegate(object instance) { return getMethodInfo.Invoke(instance, TypeHelpers.EmptyTypes); };
 #else
                 return delegate(object instance) { return getMethodInfo.Invoke(instance, Type.EmptyTypes); };
 #endif

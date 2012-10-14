@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using RestSharp.Authenticators.OAuth.Extensions;
-#if !WINDOWS_PHONE && !SILVERLIGHT
+#if !WINDOWS_PHONE && !SILVERLIGHT && !WindowsCE
 using RestSharp.Contrib;
+#endif
+
+#if WindowsCE
+using System.Globalization;
 #endif
 
 namespace RestSharp.Authenticators.OAuth
@@ -213,19 +217,23 @@ namespace RestSharp.Authenticators.OAuth
 
 			// Include url parameters in query pool
 			var uri = new Uri(url);
-#if !SILVERLIGHT && !WINDOWS_PHONE
+#if !SILVERLIGHT && !WINDOWS_PHONE && !WindowsCE
 			var urlParameters = HttpUtility.ParseQueryString(uri.Query);
 #else
-			var urlParameters = uri.Query.ParseQueryString();
+            var urlParameters = uri.Query.ParseQueryString();
 #endif
 
-#if !SILVERLIGHT && !WINDOWS_PHONE
+#if !SILVERLIGHT && !WINDOWS_PHONE && !WindowsCE
 			foreach (var parameter in urlParameters.AllKeys)
 #else
-			foreach (var parameter in urlParameters.Keys)
+            foreach (var parameter in urlParameters.Keys)
 #endif
 			{
-				switch (method.ToUpperInvariant())
+#if WindowsCE
+				switch (method.ToUpper(CultureInfo.InvariantCulture))
+#else
+                switch (method.ToUpperInvariant())
+#endif
 				{
 					case "POST":
 						parameters.Add(new HttpPostParameter(parameter, urlParameters[parameter]));

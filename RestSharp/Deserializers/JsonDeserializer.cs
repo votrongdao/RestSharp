@@ -170,7 +170,11 @@ namespace RestSharp.Deserializers
 			{
 				return stringValue;
 			}
+#if WindowsCE
+			else if (type == typeof(DateTime))
+#else
 			else if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
+#endif
 			{
 				DateTime dt;
 				if (DateFormat.HasValue())
@@ -187,10 +191,12 @@ namespace RestSharp.Deserializers
 				{
 					return dt;
 				}
+#if !WindowsCE
 				else if (type == typeof(DateTimeOffset))
 				{
 					return (DateTimeOffset)dt;
 				}
+#endif
 			}
 			else if (type == typeof(Decimal))
 			{

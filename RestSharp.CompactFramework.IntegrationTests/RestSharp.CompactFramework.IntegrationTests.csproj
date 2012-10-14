@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4462D198-F821-41EB-93DB-303978475F52}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RestSharp.CompactFramework.IntegrationTests</RootNamespace>
+    <AssemblyName>RestSharp.CompactFramework.IntegrationTests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WindowsCE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit, Version=1.9.0.1566, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\RestSharp.IntegrationTests\AsyncTests.cs">
+      <Link>AsyncTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\AuthenticationTests.cs">
+      <Link>AuthenticationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\CompressionTests.cs">
+      <Link>CompressionTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\FileTests.cs">
+      <Link>FileTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\Helpers\Extensions.cs">
+      <Link>Helpers\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\Helpers\Handlers.cs">
+      <Link>Helpers\Handlers.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\Helpers\SimpleServer.cs">
+      <Link>Helpers\SimpleServer.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\Models\LinkedINMemberProfile.cs">
+      <Link>Models\LinkedINMemberProfile.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\oAuth1Tests.cs">
+      <Link>oAuth1Tests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.IntegrationTests\StatusCodeTests.cs">
+      <Link>StatusCodeTests.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RestSharp.CompactFramework\RestSharp.CompactFramework.csproj">
+      <Project>{322AE06E-6773-4587-B4F9-7958A1CA9E75}</Project>
+      <Name>RestSharp.CompactFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\RestSharp.IntegrationTests\Assets\Koala.jpg">
+      <Link>Assets\Koala.jpg</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

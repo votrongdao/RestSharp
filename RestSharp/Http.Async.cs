@@ -33,6 +33,10 @@ using System.Windows;
 using System.Web;
 #endif
 
+#if WindowsCE
+using System.Globalization;
+#endif
+
 namespace RestSharp
 {
 	/// <summary>
@@ -84,8 +88,12 @@ namespace RestSharp
 		/// <returns></returns>
 		public HttpWebRequest AsPostAsync(Action<HttpResponse> action, string httpMethod)
 		{
-			return PutPostInternalAsync(httpMethod.ToUpperInvariant(), action);
-		}
+#if WindowsCE
+			return PutPostInternalAsync(httpMethod.ToUpper(CultureInfo.InvariantCulture), action);
+#else
+            return PutPostInternalAsync(httpMethod.ToUpperInvariant(), action);
+#endif
+        }
 
 		/// <summary>
 		/// Execute an async GET-style request with the specified HTTP Method.  
@@ -94,8 +102,12 @@ namespace RestSharp
 		/// <returns></returns>
 		public HttpWebRequest AsGetAsync(Action<HttpResponse> action, string httpMethod)
 		{
+#if WindowsCE
+            return GetStyleMethodInternalAsync(httpMethod.ToUpper(CultureInfo.InvariantCulture), action);
+#else
 			return GetStyleMethodInternalAsync(httpMethod.ToUpperInvariant(), action);
-		}
+#endif
+        }
 
 	    private HttpWebRequest GetStyleMethodInternalAsync(string method, Action<HttpResponse> callback)
 		{
@@ -359,10 +371,14 @@ namespace RestSharp
 			WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
 #endif
 			var webRequest = (HttpWebRequest)WebRequest.Create(url);
+#if !WindowsCE
 			webRequest.UseDefaultCredentials = false;
+#endif
 
-			AppendHeaders(webRequest);
+		    AppendHeaders(webRequest);
+#if !WindowsCE
 			AppendCookies(webRequest);
+#endif
 
 			webRequest.Method = method;
 

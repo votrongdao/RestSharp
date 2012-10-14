@@ -522,7 +522,7 @@ namespace RestSharp.Tests
 
 			Assert.Null(payload.NullableDateTimeWithNull);
 		}
-
+#if !WindowsCE
 		[Fact]
 		public void Can_Deserialize_DateTimeOffset()
 		{
@@ -532,7 +532,7 @@ namespace RestSharp.Tests
 				new DateTime(2011, 6, 30, 8, 15, 46, 929, DateTimeKind.Utc),
 				payload.DateTimeOffset);
 		}
-
+#endif
 		[Fact]
 		public void Can_Deserialize_Iso8601DateTimeLocal()
 		{
@@ -562,7 +562,7 @@ namespace RestSharp.Tests
 				new DateTime(2012, 7, 19, 10, 23, 25, 544, DateTimeKind.Utc),
 				payload.DateTimeWithOffset.ToUniversalTime());
 		}
-
+#if !WindowsCE
 		[Fact]
 		public void Can_Deserialize_Nullable_DateTimeOffset_With_Value()
 		{
@@ -581,7 +581,7 @@ namespace RestSharp.Tests
 
 			Assert.Null(payload.NullableDateTimeOffsetWithNull);
 		}
-
+#endif
 		[Fact]
 		public void Can_Deserialize_To_Dictionary_String_String()
 		{

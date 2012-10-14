@@ -3,9 +3,13 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using RestSharp.Authenticators.OAuth.Extensions;
+#if WindowsCE
+using RestSharp.Security.Cryptography;
+#endif
 
 namespace RestSharp.Authenticators.OAuth
 {
+
 #if !SILVERLIGHT && !WINDOWS_PHONE
 	[Serializable]
 #endif

@@ -1,14 +1,17 @@
-﻿#if FRAMEWORK
+﻿#if FRAMEWORK || WindowsCE
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using RestSharp.Deserializers;
+#if WindowsCE
+using RestSharp.Helpers;
+#endif
 
 namespace RestSharp
 {
-	public partial class RestClient
+    public partial class RestClient
 	{
 
 		/// <summary>
@@ -35,7 +38,11 @@ namespace RestSharp
 		/// <returns>RestResponse</returns>
 		public virtual IRestResponse Execute(IRestRequest request)
 		{
-			var method = Enum.GetName(typeof(Method), request.Method);
+#if WindowsCE
+			var method = EnumHelpers.GetName(typeof(Method), request.Method);
+#else
+            var method = Enum.GetName(typeof(Method), request.Method);
+#endif
 			switch (request.Method)
 			{
 				case Method.POST:

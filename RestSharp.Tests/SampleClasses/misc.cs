@@ -160,10 +160,12 @@ namespace RestSharp.Tests
 		public DateTime DateTime { get; set; }
 		public DateTime? NullableDateTimeWithNull { get; set; }
 		public DateTime? NullableDateTimeWithValue { get; set; }
-		public DateTimeOffset DateTimeOffset { get; set; }
+#if !WindowsCE
+        public DateTimeOffset DateTimeOffset { get; set; }
 		public DateTimeOffset? NullableDateTimeOffsetWithNull { get; set; }
 		public DateTimeOffset? NullableDateTimeOffsetWithValue { get; set; }
-	}
+#endif
+    }
 
 	public class Iso8601DateTimeTestStructure
 	{

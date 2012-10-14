@@ -182,8 +182,11 @@ namespace RestSharp.Contrib
 
 			byte[] buf = bytes.ToArray();
 			bytes = null;
-			return e.GetString(buf);
-
+#if WindowsCE
+            return e.GetString(buf, 0, buf.Length);
+#else
+            return e.GetString(buf);
+#endif
 		}
 
 		public static string UrlDecode(byte[] bytes, Encoding e)
@@ -412,8 +415,12 @@ namespace RestSharp.Contrib
 			// avoided GetByteCount call
 			byte[] bytes = new byte[Enc.GetMaxByteCount(s.Length)];
 			int realLen = Enc.GetBytes(s, 0, s.Length, bytes, 0);
-			return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, realLen));
-		}
+#if WindowsCE
+            return Text.Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, realLen));
+#else
+            return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, realLen));
+#endif
+        }
 
 		public static string UrlEncode(byte[] bytes)
 		{
@@ -423,8 +430,12 @@ namespace RestSharp.Contrib
 			if (bytes.Length == 0)
 				return String.Empty;
 
-			return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, bytes.Length));
-		}
+#if WindowsCE
+			return Text.Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, bytes.Length));
+#else
+            return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, bytes.Length));
+#endif
+        }
 
 		public static string UrlEncode(byte[] bytes, int offset, int count)
 		{
@@ -434,8 +445,12 @@ namespace RestSharp.Contrib
 			if (bytes.Length == 0)
 				return String.Empty;
 
-			return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, offset, count));
-		}
+#if WindowsCE
+            return Text.Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, offset, count));
+#else
+            return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, offset, count));
+#endif
+        }
 
 		public static byte[] UrlEncodeToBytes(string str)
 		{
@@ -481,8 +496,12 @@ namespace RestSharp.Contrib
 			if (str == null)
 				return null;
 
-			return Encoding.ASCII.GetString(UrlEncodeUnicodeToBytes(str));
-		}
+#if WindowsCE
+            return Text.Encoding.ASCII.GetString(UrlEncodeUnicodeToBytes(str));
+#else
+            return Encoding.ASCII.GetString(UrlEncodeUnicodeToBytes(str));
+#endif
+        }
 
 		public static byte[] UrlEncodeUnicodeToBytes(string str)
 		{

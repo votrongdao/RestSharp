@@ -18,10 +18,13 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+#if WindowsCE
+using RestSharp.Helpers;
+#endif
 
 namespace RestSharp.Extensions
 {
-	/// <summary>
+    /// <summary>
 	/// Reflection extensions
 	/// </summary>
 	public static class ReflectionExtensions
@@ -103,6 +106,27 @@ namespace RestSharp.Extensions
 				{
 					ret = (Enum) Enum.ToObject(type, enumValueAsInt);
 				}
+			}
+
+			return ret;
+#elif WindowsCE
+			var ret = EnumHelpers.GetValues( type )
+			.Cast<Enum>()
+			.FirstOrDefault(v => v.ToString().GetNameVariants(culture).Contains(value, StringComparer.Create(culture, true)));
+
+			if (ret == null)
+			{
+			    try
+			    {
+                    var enumValueAsInt = Int32.Parse(value);
+                    if (Enum.IsDefined(type, enumValueAsInt))
+                    {
+                        ret = (Enum)Enum.ToObject(type, enumValueAsInt);
+                    }
+			    }
+			    catch (FormatException)
+			    {
+			    }
 			}
 
 			return ret;

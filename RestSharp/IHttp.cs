@@ -24,15 +24,17 @@ namespace RestSharp
 {
 	public interface IHttp
 	{
+#if !WindowsCE
 		CookieContainer CookieContainer { get; set; }
-		ICredentials Credentials { get; set; }
+#endif
+        ICredentials Credentials { get; set; }
 		string UserAgent { get; set; }
 		int Timeout { get; set; }
 #if !SILVERLIGHT
 		bool FollowRedirects { get; set; }
 #endif
-#if FRAMEWORK
-		X509CertificateCollection ClientCertificates { get; set; }
+#if FRAMEWORK || WindowsCE
+        X509CertificateCollection ClientCertificates { get; set; }
 		int? MaxRedirects { get; set; }
 #endif
 
@@ -55,7 +57,7 @@ namespace RestSharp
 		HttpWebRequest AsPostAsync(Action<HttpResponse> action, string httpMethod);
 		HttpWebRequest AsGetAsync(Action<HttpResponse> action, string httpMethod);
 
-#if FRAMEWORK
+#if FRAMEWORK || WindowsCE
 		HttpResponse Delete();
 		HttpResponse Get();
 		HttpResponse Head();

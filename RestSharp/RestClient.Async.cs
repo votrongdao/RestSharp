@@ -21,9 +21,13 @@ using System.Threading;
 using System.Text;
 using System.Net;
 
+#if WindowsCE
+using RestSharp.Helpers;
+#endif
+
 namespace RestSharp
 {
-	public partial class RestClient
+    public partial class RestClient
 	{
 		/// <summary>
 		/// Executes the request and callback asynchronously, authenticating if needed
@@ -32,9 +36,13 @@ namespace RestSharp
 		/// <param name="callback">Callback function to be executed upon completion providing access to the async handle.</param>
 		public virtual RestRequestAsyncHandle ExecuteAsync(IRestRequest request, Action<IRestResponse, RestRequestAsyncHandle> callback)
 		{
+#if WindowsCE
+		    string method = EnumHelpers.GetName(typeof(Method), request.Method);
+#else
+            string method = Enum.GetName(typeof(Method), request.Method);
+#endif
 
-				string method = Enum.GetName(typeof (Method), request.Method);
-				switch (request.Method)
+            switch (request.Method)
 				{
 						case Method.PATCH:
 						case Method.POST:
@@ -82,7 +90,7 @@ namespace RestSharp
 			var asyncHandle = new RestRequestAsyncHandle();
 
 			Action<HttpResponse> response_cb = r => ProcessResponse(request, r, asyncHandle, callback);
-
+#if !WindowsCE
 			if (UseSynchronizationContext && SynchronizationContext.Current != null)
 			{
 				var ctx = SynchronizationContext.Current;
@@ -90,7 +98,7 @@ namespace RestSharp
 
 				response_cb = resp => ctx.Post(s => cb(resp), null);
 			}
-
+#endif
 			asyncHandle.WebRequest = getWebRequest(http, response_cb, httpMethod);
 			return asyncHandle;
 		}

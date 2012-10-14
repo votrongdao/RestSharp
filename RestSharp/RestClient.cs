@@ -32,7 +32,11 @@ namespace RestSharp
 	public partial class RestClient : IRestClient
 	{
 		// silverlight friendly way to get current version
-		static readonly Version version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
+#if WindowsCE
+		static readonly Version version = Assembly.GetExecutingAssembly().GetName().Version;
+#else
+        static readonly Version version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
+#endif
 
 		public IHttpFactory HttpFactory = new SimpleFactory<Http>();
 
@@ -160,7 +164,9 @@ namespace RestSharp
 		/// <summary>
 		/// The CookieContainer used for requests made by this client instance
 		/// </summary>
+#if !WindowsCE
 		public CookieContainer CookieContainer { get; set; }
+#endif
 
 		/// <summary>
 		/// UserAgent to use for requests made by this client instance
@@ -280,7 +286,9 @@ namespace RestSharp
 
 		private void ConfigureHttp(IRestRequest request, IHttp http)
 		{
+#if !WindowsCE
 			http.CookieContainer = CookieContainer;
+#endif
 
 			// move RestClient.DefaultParameters into Request.Parameters
 			foreach(var p in DefaultParameters)
@@ -296,9 +304,9 @@ namespace RestSharp
 			http.Url = BuildUri(request);
 
 			var userAgent = UserAgent ?? http.UserAgent;
-			http.UserAgent = userAgent.HasValue() ? userAgent : "RestSharp " + version.ToString();
+            http.UserAgent = userAgent.HasValue() ? userAgent : "RestSharp " + version.ToString();
 
-			var timeout = request.Timeout > 0 ? request.Timeout : Timeout;
+            var timeout = request.Timeout > 0 ? request.Timeout : Timeout;
 			if (timeout > 0)
 			{
 				http.Timeout = timeout;

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp.CompactFramework", "RestSharp.CompactFramework\RestSharp.CompactFramework.csproj", "{322AE06E-6773-4587-B4F9-7958A1CA9E75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp.CompactFramework.IntegrationTests", "RestSharp.CompactFramework.IntegrationTests\RestSharp.CompactFramework.IntegrationTests.csproj", "{4462D198-F821-41EB-93DB-303978475F52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp.CompactFramework.Tests", "RestSharp.CompactFramework.Tests\RestSharp.CompactFramework.Tests.csproj", "{203B36E5-E614-4AB0-B282-38AD3B879E9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{322AE06E-6773-4587-B4F9-7958A1CA9E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{322AE06E-6773-4587-B4F9-7958A1CA9E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{322AE06E-6773-4587-B4F9-7958A1CA9E75}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{322AE06E-6773-4587-B4F9-7958A1CA9E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{322AE06E-6773-4587-B4F9-7958A1CA9E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{322AE06E-6773-4587-B4F9-7958A1CA9E75}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4462D198-F821-41EB-93DB-303978475F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4462D198-F821-41EB-93DB-303978475F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4462D198-F821-41EB-93DB-303978475F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4462D198-F821-41EB-93DB-303978475F52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203B36E5-E614-4AB0-B282-38AD3B879E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203B36E5-E614-4AB0-B282-38AD3B879E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203B36E5-E614-4AB0-B282-38AD3B879E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203B36E5-E614-4AB0-B282-38AD3B879E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

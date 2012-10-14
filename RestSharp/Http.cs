@@ -105,8 +105,10 @@ namespace RestSharp
 		/// <summary>
 		/// The System.Net.CookieContainer to be used for the request
 		/// </summary>
+#if !WindowsCE
 		public CookieContainer CookieContainer { get; set; }
-		/// <summary>
+#endif
+        /// <summary>
 		/// Collection of files to be sent with request
 		/// </summary>
 		public IList<HttpFile> Files { get; private set; }
@@ -116,8 +118,8 @@ namespace RestSharp
 		/// </summary>
 		public bool FollowRedirects { get; set; }
 #endif
-#if FRAMEWORK
-		/// <summary>
+#if FRAMEWORK || WindowsCE
+        /// <summary>
 		/// X509CertificateCollection to be sent with request
 		/// </summary>
 		public X509CertificateCollection ClientCertificates { get; set; }
@@ -151,8 +153,8 @@ namespace RestSharp
 		/// </summary>
 		public Uri Url { get; set; }
 
-#if FRAMEWORK
-		/// <summary>
+#if FRAMEWORK || WindowsCE
+        /// <summary>
 		/// Proxy info to be sent with request
 		/// </summary>
 		public IWebProxy Proxy { get; set; }
@@ -245,6 +247,7 @@ namespace RestSharp
 			}
 		}
 
+#if !WindowsCE
 		private void AppendCookies(HttpWebRequest webRequest)
 		{
 			webRequest.CookieContainer = this.CookieContainer ?? new CookieContainer();
@@ -269,6 +272,7 @@ namespace RestSharp
 #endif
 			}
 		}
+#endif
 
 		private string EncodeParameters()
 		{
@@ -350,6 +354,7 @@ namespace RestSharp
 				response.ResponseUri = webResponse.ResponseUri;
 				response.ResponseStatus = ResponseStatus.Completed;
 
+#if !WindowsCE
 				if (webResponse.Cookies != null)
 				{
 					foreach (Cookie cookie in webResponse.Cookies)
@@ -372,6 +377,7 @@ namespace RestSharp
 						});
 					}
 				}
+#endif
 
 				foreach (var headerName in webResponse.Headers.AllKeys)
 				{

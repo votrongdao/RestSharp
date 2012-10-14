@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using RestSharp.Authenticators.OAuth;
@@ -8,7 +9,7 @@ using RestSharp.Authenticators.OAuth.Extensions;
 using System.Net;
 #elif SILVERLIGHT
 using System.Windows.Browser;
-#else
+#elif !WindowsCE
 using RestSharp.Contrib;
 #endif
 
@@ -156,7 +157,11 @@ namespace RestSharp.Authenticators
 				url = url.Substring(0, queryStringStart);
 
 			OAuthWebQueryInfo oauth;
+#if WindowsCE
+		    var method = request.Method.ToString().ToUpper(CultureInfo.InvariantCulture);
+#else
 			var method = request.Method.ToString().ToUpperInvariant();
+#endif
 
 			var parameters = new WebParameterCollection();
 
@@ -205,8 +210,12 @@ namespace RestSharp.Authenticators
 					parameters.Add("oauth_signature", oauth.Signature);
 					foreach (var parameter in parameters.Where(parameter => !parameter.Name.IsNullOrBlank() && parameter.Name.StartsWith("oauth_")))
 					{
-						request.AddParameter(parameter.Name, HttpUtility.UrlDecode(parameter.Value));
-					}
+#if WindowsCE
+						request.AddParameter(parameter.Name, Uri.EscapeDataString(parameter.Value));
+#else
+                        request.AddParameter(parameter.Name, HttpUtility.UrlDecode(parameter.Value));
+#endif
+                        }
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();

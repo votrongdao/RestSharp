@@ -29,19 +29,21 @@ using System.Windows.Browser;
 #if WINDOWS_PHONE
 #endif
 
-#if FRAMEWORK || MONOTOUCH || MONODROID
+#if FRAMEWORK || MONOTOUCH || MONODROID || WindowsCE
 using RestSharp.Contrib;
 #endif
-
+#if WindowsCE
+using RestSharp.Helpers;
+#endif
 
 namespace RestSharp.Extensions
 {
-	public static class StringExtensions
+    public static class StringExtensions
 	{
 		public static string UrlDecode(this string input)
 		{
 			return HttpUtility.UrlDecode(input);
-		}
+        }
 
 		/// <summary>
 		/// Uses Uri.EscapeDataString() based on recommendations on MSDN
@@ -102,7 +104,11 @@ namespace RestSharp.Extensions
 			input = input.RemoveSurroundingQuotes();
 
 			long unix;
-			if (Int64.TryParse(input, out unix))
+#if WindowsCE
+            if (Int64Helpers.TryParse(input, out unix))
+#else
+            if (Int64.TryParse(input, out unix))
+#endif
 			{
 				var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 				return epoch.AddSeconds(unix);
@@ -152,12 +158,20 @@ namespace RestSharp.Extensions
 			};
 
 			DateTime date;
-			if (DateTime.TryParseExact(input, formats, culture, DateTimeStyles.None, out date))
+#if WindowsCE
+            if (DateTimeHelpers.TryParseExact(input, formats, culture, DateTimeStyles.None, out date))
+#else
+            if (DateTime.TryParseExact(input, formats, culture, DateTimeStyles.None, out date))
+#endif
 			{
 				return date;
 			}
 
+#if WindowsCE
+			if (DateTimeHelpers.TryParse(input, culture, DateTimeStyles.None, out date))
+#else
 			if (DateTime.TryParse(input, culture, DateTimeStyles.None, out date))
+#endif
 			{
 				return date;
 			}
@@ -356,5 +370,10 @@ namespace RestSharp.Extensions
 			// try name with underscore prefix, using camel case
 			yield return name.ToCamelCase(culture).AddUnderscorePrefix();
 		}
+
+        public static string ToUpperInvariant(this string input)
+        {
+            return input.ToUpper(CultureInfo.InvariantCulture);
+        }
 	}
 }

@@ -3,10 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using RestSharp.Extensions;
 
 namespace RestSharp.IntegrationTests.Helpers
 {
-	public static class Handlers
+    public static class Handlers
 	{
 		/// <summary>
 		/// Echoes the request input back to the output.
@@ -30,9 +31,14 @@ namespace RestSharp.IntegrationTests.Helpers
 		/// </summary>
 		public static void FileHandler(HttpListenerContext context)
 		{
-			var pathToFile = Path.Combine(context.Request.Url.Segments.Select(s => s.Replace("/", "")).ToArray());
-
-			using(var reader = new StreamReader(pathToFile))
+#if WindowsCE
+		    var segments = context.Request.Url.Segments.Select(s => s.Replace("/", ""));
+		    var segmentsArray = segments.ToArray();
+            var pathToFile = Path.Combine(segmentsArray[1], segmentsArray[2]);
+#else
+            var pathToFile = Path.Combine(context.Request.Url.Segments.Select(s => s.Replace("/", "")).ToArray());
+#endif
+            using (var reader = new StreamReader(pathToFile))
 				reader.BaseStream.CopyTo(context.Response.OutputStream);
 		}
 

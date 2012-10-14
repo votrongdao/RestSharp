@@ -29,8 +29,10 @@ namespace RestSharp
 		/// <summary>
 		/// 
 		/// </summary>
+#if !WindowsCE
 		CookieContainer CookieContainer { get; set; }
-		/// <summary>
+#endif
+        /// <summary>
 		/// 
 		/// </summary>
 		string UserAgent { get; set; }

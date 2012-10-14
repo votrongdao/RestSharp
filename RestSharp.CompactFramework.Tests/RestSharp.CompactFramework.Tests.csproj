@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{203B36E5-E614-4AB0-B282-38AD3B879E9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RestSharp.CompactFramework.Tests</RootNamespace>
+    <AssemblyName>RestSharp.CompactFramework.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WindowsCE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit, Version=1.9.0.1566, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\RestSharp.Tests\CultureChange.cs">
+      <Link>CultureChange.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\Fakes\NullHttp.cs">
+      <Link>Fakes\NullHttp.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\JsonTests.cs">
+      <Link>JsonTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\NamespacedXmlTests.cs">
+      <Link>NamespacedXmlTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\BooleanTest.cs">
+      <Link>SampleClasses\BooleanTest.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\eventful.cs">
+      <Link>SampleClasses\eventful.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\foursq.cs">
+      <Link>SampleClasses\foursq.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\googleweather.cs">
+      <Link>SampleClasses\googleweather.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\JsonLists.cs">
+      <Link>SampleClasses\JsonLists.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\Lastfm.cs">
+      <Link>SampleClasses\Lastfm.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\ListSamples.cs">
+      <Link>SampleClasses\ListSamples.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\misc.cs">
+      <Link>SampleClasses\misc.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\nullables.cs">
+      <Link>SampleClasses\nullables.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\SOUser.cs">
+      <Link>SampleClasses\SOUser.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\TwilioCallList.cs">
+      <Link>SampleClasses\TwilioCallList.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SampleClasses\twitter.cs">
+      <Link>SampleClasses\twitter.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SerializerTests.cs">
+      <Link>SerializerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\SimpleJson.cs">
+      <Link>SimpleJson.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\UrlBuilderTests.cs">
+      <Link>UrlBuilderTests.cs</Link>
+    </Compile>
+    <Compile Include="..\RestSharp.Tests\XmlTests.cs">
+      <Link>XmlTests.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\RestSharp.Tests\SampleData\4sq.txt">
+      <Link>SampleData\4sq.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\boolean_from_number.xml">
+      <Link>SampleData\boolean_from_number.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\boolean_from_string.xml">
+      <Link>SampleData\boolean_from_string.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\datetimes.txt">
+      <Link>SampleData\datetimes.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\directlists.xml">
+      <Link>SampleData\directlists.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\eventful.xml">
+      <Link>SampleData\eventful.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\GenericWithList.txt">
+      <Link>SampleData\GenericWithList.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\GoogleWeather.xml">
+      <Link>SampleData\GoogleWeather.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\InlineListSample.xml">
+      <Link>SampleData\InlineListSample.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\iso8601datetimes.txt">
+      <Link>SampleData\iso8601datetimes.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\jsonarray.txt">
+      <Link>SampleData\jsonarray.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\jsonenums.txt">
+      <Link>SampleData\jsonenums.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\jsonlists.txt">
+      <Link>SampleData\jsonlists.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\Lastfm.xml">
+      <Link>SampleData\Lastfm.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\ListWithAttributes.xml">
+      <Link>SampleData\ListWithAttributes.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\NestedListSample.xml">
+      <Link>SampleData\NestedListSample.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\person.json.txt">
+      <Link>SampleData\person.json.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\sojson.txt">
+      <Link>SampleData\sojson.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\timespans.txt">
+      <Link>SampleData\timespans.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\underscore_prefix.txt">
+      <Link>SampleData\underscore_prefix.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RestSharp.Tests\SampleData\xmllists.xml">
+      <Link>SampleData\xmllists.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RestSharp.CompactFramework\RestSharp.CompactFramework.csproj">
+      <Project>{322AE06E-6773-4587-B4F9-7958A1CA9E75}</Project>
+      <Name>RestSharp.CompactFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -14,11 +14,11 @@
 //   limitations under the License. 
 #endregion
 
-#if FRAMEWORK
+#if FRAMEWORK || WindowsCE
 using System;
 using System.Net;
 
-#if !MONOTOUCH && !MONODROID
+#if !MONOTOUCH && !MONODROID && !WindowsCE
 using System.Web;
 #endif
 
@@ -203,13 +203,17 @@ namespace RestSharp
 		private HttpWebRequest ConfigureWebRequest(string method, Uri url)
 		{
 			var webRequest = (HttpWebRequest)WebRequest.Create(url);
-			webRequest.UseDefaultCredentials = false;
+#if !WindowsCE
+            webRequest.UseDefaultCredentials = false;
+#endif
 			ServicePointManager.Expect100Continue = false;
 
 			AppendHeaders(webRequest);
+#if !WindowsCE
 			AppendCookies(webRequest);
+#endif
 
-			webRequest.Method = method;
+            webRequest.Method = method;
 
 			// make sure Content-Length header is always sent since default is -1
 			if(!HasFiles)
